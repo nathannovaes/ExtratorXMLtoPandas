@@ -15,20 +15,3 @@ Legenda: a = posição do primeiro nó, b = posição do segundo nó e assim res
 Cada nó é identificado por um número. Na Figura A o nó root[0][0][1].text seria a tag
 emit.
 
-----------Figura A----------
-<nfeProc versao="4.00">
-   <NFe>
-      <infNFe versao="4.00">
-         <ide>
-            Outros nós...
-         </ide>
-         <emit>
-            Outros nós...
-         </emit>
-         <dest>
-            Outros nós...
-         </dest>
-      </infNFe>
-   </NFe
-</nfeProc>
---------------------------
