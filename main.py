@@ -1,8 +1,10 @@
 ####API
 #Importa a API para manipular o XML
 import xml.etree.ElementTree as ET
+from fornecedor import *
+
 #Seleciona o arquivo que vamos manipular
-tree = ET.parse('1.xml')
+tree = ET.parse('3.xml')
 #Guarda o aquivo dentro de root
 root = tree.getroot()
 
@@ -16,7 +18,12 @@ print(data[:10])
 print(root[0][0][1][1].text)
 
 ####CIDADE
-print(root[0][0][1][2][4].text)
+#Foi necessário utilizar um Try/Except, pois nem toda nota possui o mesmo layout.
+try:
+  print(root[0][0][1][2][4].text)
+except:
+  print(root[0][0][1][3][4].text)
+
 
 ####NÚMERO FISCAL
 print(root[0][0][0][5].text)
@@ -36,6 +43,8 @@ i = 3
 while root[0][0][i].tag == 'det':
     #Nome do produto
     print(root[0][0][i][0][2].text)
+    fornecedor = encontraFornecedor(root[0][0][i][0][2].text)
+    print(fornecedor)
     #Código fiscal de operação
     print(root[0][0][i][0][5].text)
     #Valor total
@@ -43,14 +52,24 @@ while root[0][0][i].tag == 'det':
     #Valor ICMS
     #Faz uma validação para ver se o produto tem imposto. Se for CFOP 5202, ele tem.
     if root[0][0][i][0][5].text == '5202':
-        print(root[0][0][i][1][0][0][5].text)
+        try:
+            print(root[0][0][i][1][0][0][5].text)
+        except:
+            print("xxxxxxxxxxxxxxxx")
     else:
         print('0')
     i+=1
 
 ####VENCIMENTO
 #Somamos + 2 em i, porque assim pulamos direto para a tag da cobrança cobr.
-i += 2
-print(root[0][0][i][1][1].text)
-
-
+try:
+    i += 2
+    print(root[0][0][i][1][1].text)
+except:
+    #Se a nota não tem data de validade para pagamento, é necessário colocar.
+    ano = data[0:5]
+    mes = data[5:7]
+    dia = data[7:10]
+    numMes = int(mes) + 1
+    mes = str(numMes)
+    print(ano + mes + dia)
