@@ -46,16 +46,42 @@ while root[0][0][i].tag == 'det':
     fornecedor = encontraFornecedor(root[0][0][i][0][2].text)
     print(fornecedor)
     #Código fiscal de operação
-    print(root[0][0][i][0][5].text)
+
+    #Verifica se a tag é CFOP
+    if root[0][0][i][0][5].tag == 'CFOP':
+        print(root[0][0][i][0][5].text)
+    #Caso não encontre, o programa procura pega tag CFOP
+    else:
+        j = 1
+        while root[0][0][i][0][j].tag != 'CFOP':
+            j+=1
+        print(root[0][0][i][0][j].text)
+
     #Valor total
-    print(root[0][0][i][0][9].text)
+    #Verifica se a tag é vProd
+    if root[0][0][i][0][9].tag == 'vProd':
+        print(root[0][0][i][0][9].text)
+    #Caso não encontre, o programa procura pega tag vProd
+    else:
+        j = 1
+        while root[0][0][i][0][j].tag != 'vProd':
+            j+=1
+        print(root[0][0][i][0][j].text)
+
     #Valor ICMS
     #Faz uma validação para ver se o produto tem imposto. Se for CFOP 5202, ele tem.
     if root[0][0][i][0][5].text == '5202':
-        try:
-            print(root[0][0][i][1][0][0][5].text)
-        except:
-            print("xxxxxxxxxxxxxxxx")
+        #Procura a tag ICMS
+        j = 1
+        while root[0][0][i][1][j].tag != 'ICMS':
+            j += 1
+        #Encontrou a tag ICMS
+        #Procura pela tag vICMS
+        k = 1
+        while root[0][0][i][1][j][0][k].tag != 'vICMS':
+            k += 1
+        #Exibe o valor do imposto
+        print(root[0][0][i][1][j][0][k].text)
     else:
         print('0')
     i+=1
@@ -73,3 +99,4 @@ except:
     numMes = int(mes) + 1
     mes = str(numMes)
     print(ano + mes + dia)
+
