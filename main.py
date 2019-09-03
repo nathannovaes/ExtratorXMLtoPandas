@@ -42,6 +42,7 @@ emit.
 import xml.etree.ElementTree as ET
 from fornecedor import *
 from escreveExcel import *
+from verificaPisConfins import *
 
 #Seleciona o arquivo que vamos manipular
 tree = ET.parse('4.xml')
@@ -104,6 +105,11 @@ while root[0][0][i].tag == 'det':
             j+=1
         cfop = root[0][0][i][0][j].text
         print(cfop)
+
+
+    #Pis Confins
+    #Identifica se o pis/confins é normal ou isento
+    pisconfins = verificaPisConfis(fornecedor)
 
     #Valor total
     #Verifica se a tag é vProd
