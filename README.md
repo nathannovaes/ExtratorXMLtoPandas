@@ -1,6 +1,6 @@
 # ExtratorXML
 
-Objetivo: Extrair da nota fiscal os dados que uma pessoa precisaria olhar e passar isso
+Objetivo: Extrair da nota fiscal os dados que uma pessoa precisaria olhar e passar isso automaticamente 
 para uma panilha em excel.
 
 ## Ferramentas:
