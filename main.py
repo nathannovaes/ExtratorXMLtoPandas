@@ -1,10 +1,50 @@
+"""
+DOCUMENTAÇÃO DO CÓDIGO
+
+Objetivo: Extrair da nota fiscal os dados que uma pessoa precisaria olhar e passar isso
+para uma panilha em excel.
+
+Ferramentas:
+- API ElementTree XML API
+
+Informações importantes:
+- A variável root corresponde ao nó principal da nossa árvore. Na Figura A o nosso
+root seria a tag nfeProc.
+- Para pegar uma informação de alguma tag, preocisamos acessar o nó correto. Para isso
+é necessário especificar o caminho que vamos seguir. Por exemplo: root[a][b][c][n].text
+Legenda: a = posição do primeiro nó, b = posição do segundo nó e assim respectivamente
+Cada nó é identificado por um número. Na Figura A o nó root[0][0][1].text seria a tag
+emit.
+
+----------Figura A----------
+<nfeProc versao="4.00">
+   <NFe>
+      <infNFe versao="4.00">
+         <ide>
+            Outros nós...
+         </ide>
+         <emit>
+            Outros nós...
+         </emit>
+         <dest>
+            Outros nós...
+         </dest>
+      </infNFe>
+   </NFe
+</nfeProc>
+--------------------------
+
+
+
+"""
 ####API
 #Importa a API para manipular o XML
 import xml.etree.ElementTree as ET
 from fornecedor import *
+from escreveExcel import *
 
 #Seleciona o arquivo que vamos manipular
-tree = ET.parse('3.xml')
+tree = ET.parse('4.xml')
 #Guarda o aquivo dentro de root
 root = tree.getroot()
 
@@ -12,24 +52,30 @@ root = tree.getroot()
 #Guarda o valor da data em uma variavel
 data = root[0][0][0][6].text
 #Exibe o valor em pedaço, pois só queremos a data. Não horas, minutos, segundos e etc.
-print(data[:10])
+data = data[:10]
+print(data)
 
 ####NOME DO CLIENTE
-print(root[0][0][1][1].text)
+nome = root[0][0][1][1].text
+print(nome)
 
-####CIDADE
+####MUNICÍPIO
 #Foi necessário utilizar um Try/Except, pois nem toda nota possui o mesmo layout.
 try:
-  print(root[0][0][1][2][4].text)
+    municipio = root[0][0][1][2][4].text
+    print(municipio)
 except:
-  print(root[0][0][1][3][4].text)
+    municipio = root[0][0][1][3][4].text
+    print(municipio)
 
 
 ####NÚMERO FISCAL
-print(root[0][0][0][5].text)
+numNF = root[0][0][0][5].text
+print(numNF)
 
 ####NATUREZA DA OPERAÇÃO
-print(root[0][0][0][2].text)
+natureza = root[0][0][0][2].text
+print(natureza)
 
 
 ###DADOS DO PRODUTO
@@ -49,39 +95,45 @@ while root[0][0][i].tag == 'det':
 
     #Verifica se a tag é CFOP
     if root[0][0][i][0][5].tag == 'CFOP':
-        print(root[0][0][i][0][5].text)
+        cfop = root[0][0][i][0][5].text
+        print(cfop)
     #Caso não encontre, o programa procura pega tag CFOP
     else:
         j = 1
         while root[0][0][i][0][j].tag != 'CFOP':
             j+=1
-        print(root[0][0][i][0][j].text)
+        cfop = root[0][0][i][0][j].text
+        print(cfop)
 
     #Valor total
     #Verifica se a tag é vProd
     if root[0][0][i][0][9].tag == 'vProd':
-        print(root[0][0][i][0][9].text)
+        vProd = root[0][0][i][0][9].text
+        print(vProd)
     #Caso não encontre, o programa procura pega tag vProd
     else:
         j = 1
         while root[0][0][i][0][j].tag != 'vProd':
             j+=1
-        print(root[0][0][i][0][j].text)
+        vProd = root[0][0][i][0][j].text
+        print(vProd)
 
     #Valor ICMS
     #Faz uma validação para ver se o produto tem imposto. Se for CFOP 5202, ele tem.
+
     if root[0][0][i][0][5].text == '5202':
         #Procura a tag ICMS
-        j = 1
+        j = 0
         while root[0][0][i][1][j].tag != 'ICMS':
             j += 1
         #Encontrou a tag ICMS
         #Procura pela tag vICMS
-        k = 1
+        k = 0
         while root[0][0][i][1][j][0][k].tag != 'vICMS':
             k += 1
         #Exibe o valor do imposto
-        print(root[0][0][i][1][j][0][k].text)
+        vICMS = root[0][0][i][1][j][0][k].text
+        print(vICMS)
     else:
         print('0')
     i+=1
@@ -90,7 +142,8 @@ while root[0][0][i].tag == 'det':
 #Somamos + 2 em i, porque assim pulamos direto para a tag da cobrança cobr.
 try:
     i += 2
-    print(root[0][0][i][1][1].text)
+    Venc = root[0][0][i][1][1].text
+    print(Venc)
 except:
     #Se a nota não tem data de validade para pagamento, é necessário colocar.
     ano = data[0:5]
@@ -98,5 +151,7 @@ except:
     dia = data[7:10]
     numMes = int(mes) + 1
     mes = str(numMes)
-    print(ano + mes + dia)
+    Venc = ano + mes + dia
+    print(Venc)
 
+lancaPlanilha(data, nome, municipio, numNF, natureza, fornecedor, cfop, pisconfins, vICMS, vProd, Venc)
