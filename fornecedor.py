@@ -5,7 +5,7 @@ def encontraFornecedor(produto):
   if produto.find('AGROINCA') != -1:
       return 'Agroinca'
   elif produto.find('THEREZOPOLIS') != -1 or produto.find('AMERICANA') != -1:
-      return 'Arbor',
+      return 'Arbor'
   elif produto.find('BARILLA') != -1:
       return 'Barilla'
   elif produto.find('BONAFONT') != -1:
