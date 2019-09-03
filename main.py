@@ -43,9 +43,10 @@ import xml.etree.ElementTree as ET
 from fornecedor import *
 from escreveExcel import *
 from verificaPisConfins import *
+from listaProdutos import *
 
 #Seleciona o arquivo que vamos manipular
-tree = ET.parse('4.xml')
+tree = ET.parse('3.xml')
 #Guarda o aquivo dentro de root
 root = tree.getroot()
 
@@ -141,14 +142,20 @@ while root[0][0][i].tag == 'det':
         vICMS = root[0][0][i][1][j][0][k].text
         print(vICMS)
     else:
-        print('0')
+        vICMS = 0
+        print(vICMS)
+    listaProdutos(data, nome, municipio, numNF, 'Devolução', natureza, fornecedor, cfop, pisconfins, vICMS, '0',vProd)
     i+=1
+
 
 ####VENCIMENTO
 #Somamos + 2 em i, porque assim pulamos direto para a tag da cobrança cobr.
+i += 2
 try:
-    i += 2
-    Venc = root[0][0][i][1][1].text
+    j = 0
+    while root[0][0][i][1][j].tag != 'dVenc':
+        j += 1
+    Venc = root[0][0][i][1][j].text
     print(Venc)
 except:
     #Se a nota não tem data de validade para pagamento, é necessário colocar.
@@ -160,4 +167,6 @@ except:
     Venc = ano + mes + dia
     print(Venc)
 
-lancaPlanilha(data, nome, municipio, numNF, natureza, fornecedor, cfop, pisconfins, vICMS, vProd, Venc)
+
+#lancaPlanilha(data, nome, municipio, numNF, natureza, fornecedor, cfop, pisconfins, vICMS, vProd, Venc)
+mostraLista(Venc)
