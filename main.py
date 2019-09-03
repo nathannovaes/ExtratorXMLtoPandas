@@ -81,6 +81,29 @@ while quant >= 1:
     natureza = root[0][0][0][2].text
     print(natureza)
 
+    #### VENCIMENTO
+    # Somamos + 2 em i, porque assim pulamos direto para a tag da cobrança cobr.
+    i = 0
+    try:
+        while root[0][0][i].tag != 'cobr':
+            i+=1
+        j = 0
+        while root[0][0][i][1][j].tag != 'dVenc':
+            j += 1
+        Venc = root[0][0][i][1][j].text
+        print(Venc)
+    except:
+        # Se a nota não tem data de validade para pagamento, é necessário colocar.
+        ano = data[0:5]
+        mes = data[5:7]
+        dia = data[7:10]
+        numMes = int(mes) + 1
+        mes = str(numMes)
+        Venc = ano + mes + dia
+        print(Venc)
+
+
+
 
     ### DADOS DO PRODUTO
     """
@@ -146,30 +169,9 @@ while quant >= 1:
         else:
             vICMS = 0
             print(vICMS)
-        listaProdutos(data, nome, municipio, numNF, 'Devolução', natureza, fornecedor, cfop, pisconfins, vICMS, '0',vProd)
+        listaProdutos(data, nome, municipio, numNF, 'Devolução', natureza, fornecedor, cfop, pisconfins, vICMS, '0',vProd, Venc)
         i+=1
 
 
-    #### VENCIMENTO
-    # Somamos + 2 em i, porque assim pulamos direto para a tag da cobrança cobr.
-    i += 2
-    try:
-        j = 0
-        while root[0][0][i][1][j].tag != 'dVenc':
-            j += 1
-        Venc = root[0][0][i][1][j].text
-        print(Venc)
-    except:
-        # Se a nota não tem data de validade para pagamento, é necessário colocar.
-        ano = data[0:5]
-        mes = data[5:7]
-        dia = data[7:10]
-        numMes = int(mes) + 1
-        mes = str(numMes)
-        Venc = ano + mes + dia
-        print(Venc)
-
-
-    #lancaPlanilha(data, nome, municipio, numNF, natureza, fornecedor, cfop, pisconfins, vICMS, vProd, Venc)
-    mostraLista(Venc)
-    quant-=1
+    mostraLista()
+    quant -= 1
