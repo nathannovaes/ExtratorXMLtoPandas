@@ -41,6 +41,6 @@ def encontraFornecedor(produto):
   elif produto.find('CONCHA') != -1:
       return 'CYT'
   else:
-      return 'Sem conhecimento'
+      return 'Fornecedor não encontrado'
 
 
