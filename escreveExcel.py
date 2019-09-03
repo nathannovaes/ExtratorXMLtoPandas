@@ -1,33 +1,32 @@
 from openpyxl import Workbook
 
-def lancaPlanilha(data, nome, municipio, numNF, natureza, fornecedor, cfop, pisconfins, vICMS, vProd, Venc):
+def lancaPlanilha(id, data,nome,municipio,numNF,nat,natureza,fornecedor,cfop,pisconfins,vICMS,v1,v2,vProd,vProd2,v3,vProd3,Venc):
+    #Abre a opção para escrever um documento Excel
     wb = Workbook()
-
-    # grab the active worksheet
     w = wb.active
-
-    # Data can be assigned directly to cells
-    w['A1'] = data
-    w['B1'] = nome
-    w['C1'] = municipio
-    w['D1'] = numNF
-    w['E1'] = 'Devolução'
-    w['F1'] = natureza
-    w['G1'] = fornecedor
-    w['H1'] = cfop
-    w['I1'] = pisconfins
-    w['J1'] = vICMS
-    w['K1'] = '0'
-    w['L1'] = '0'
-    w['M1'] = vProd
-    w['N1'] = vProd
-    w['O1'] = '0'
-    w['P1'] = vProd
-    w['Q1'] = Venc
-
-    # Rows can also be appended
-    #ws.append([1, 2, 3])
+    #Ajuda a localizar qual linha serão gravado os dados
+    end: str = str(id + 1)
+    # Coloca os valores em cada célula do Excel
+    w['A'+ end] = data
+    w['B'+ end] = nome
+    w['C'+ end] = municipio
+    w['D'+ end] = numNF
+    w['E'+ end] = nat
+    w['F'+ end] = natureza
+    w['G'+ end] = fornecedor
+    w['H'+ end] = cfop
+    w['I'+ end] = pisconfins
+    w['J'+ end] = vICMS
+    w['K'+ end] = v1
+    w['L'+ end] = v2
+    w['M'+ end] = vProd
+    w['N'+ end] = vProd2
+    w['O'+ end] = v3
+    w['P'+ end] = vProd3
+    w['Q'+ end] = Venc
 
 
-    # Save the file
+
+
+    # Salva o arquivo
     wb.save("teste.xlsx")
