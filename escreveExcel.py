@@ -2,14 +2,14 @@ import openpyxl
 
 def lancaPlanilha(id, data,nome,municipio,numNF,nat,natureza,fornecedor,cfop,pisconfins,vICMS,v1,v2,vProd,vProd2,v3,vProd3,Venc):
 
-    #Abre a opção para escrever um documento Excel
+    # Abre a opção para escrever um documento Excel
     arquivo=openpyxl.load_workbook("teste.xlsx")
 
-    #Pega a aba que será utilizada do arquivo Excel
+    # Pega a aba que será utilizada do arquivo Excel
     w = arquivo.get_sheet_by_name('Sheet')
 
-    #Ajuda a localizar qual linha serão gravado os dados
-    end: str = str(id + 1)
+    # Ajuda a localizar qual linha serão gravado os dados
+    end = str(id + 1)
 
     # Coloca os valores em cada célula do Excel
     w['A'+ end] = data
