@@ -40,6 +40,7 @@ emit.
 #### API
 # Importa a API para manipular o XML
 import xml.etree.ElementTree as ET
+import pandas as pd
 from fornecedor import *
 from verificaPisConfins import *
 from listaProdutos import *
@@ -175,3 +176,14 @@ while quant >= 1:
 
     mostraLista()
     quant -= 1
+
+
+# Guarda a lista para ser tratada pelo Pandas
+lst = lista
+
+#Cria as colunas com base na lista
+df = pd.DataFrame(lst, columns=['Data', 'Nome', 'Município',  'numNF',  'Natureza',  'Operação',  'Fornecedor',  'CFOP',  'PIS/COFINS',  'vICMS',  'x', 'x', 'Valor',  'x',  'Valor',  'Valor',  'Data Ven'])
+
+#Exibe a lista
+print(df)
+
