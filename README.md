@@ -6,6 +6,7 @@ para uma panilha em excel.
 ## Ferramentas:
 - ElementTree XML API
 - OpenPyXl API
+- Pandas - Python Data Analysis Library
 
 ## Informações importantes:
 - A variável root corresponde ao nó principal da nossa árvore. No Exemplo A o nosso
