@@ -3,8 +3,8 @@
 Objetivo: Extrair da nota fiscal os dados que uma pessoa precisaria olhar, tratar o resultado com Pandas e passar isso automaticamente para uma panilha em excel.
 
 ## Ferramentas:
-- ElementTree XML API
-- OpenPyXl API
+- ElementTree XML
+- OpenPyXl
 - Pandas - Python Data Analysis Library
 
 ## Informações importantes:
